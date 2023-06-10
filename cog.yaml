@@ -3,8 +3,7 @@ build:
   python_version: "3.10"
   python_packages:
     - "accelerate==0.17.1"
-    - "git+https://github.com/huggingface/diffusers@9dc8444"
-    - "gradio==3.23.0"
+    - "diffusers==0.17.0"
     - "huggingface-hub==0.13.3"
     - "imageio[ffmpeg]==2.26.1"
     - "torch==1.13.0"
