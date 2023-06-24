@@ -2,12 +2,11 @@ build:
   gpu: true
   python_version: "3.10"
   python_packages:
-    - "accelerate==0.17.1"
-    - "git+https://github.com/huggingface/diffusers@9dc8444"
-    - "gradio==3.23.0"
-    - "huggingface-hub==0.13.3"
-    - "imageio[ffmpeg]==2.26.1"
-    - "torch==1.13.0"
-    - "transformers==4.27.2"
+    - "accelerate==0.20.3"
+    - "diffusers==0.17.1"
+    - "gradio==3.35.2"
+    - "imageio[ffmpeg]==2.31.1"
+    - "torch==2.0.1"
+    - "transformers==4.30.2"
 
 predict: "predict.py:Predictor"

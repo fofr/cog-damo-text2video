@@ -12,10 +12,8 @@ class Predictor(BasePredictor):
     def setup(self):
         """Load the model into memory to make running multiple predictions efficient"""
         self.pipe = DiffusionPipeline.from_pretrained(
-            "damo-vilab/text-to-video-ms-1.7b",
+            MODEL_CACHE,
             torch_dtype=torch.float16,
-            variant="fp16",
-            cache_dir=MODEL_CACHE,
             local_files_only=True,
         ).to("cuda")
 
