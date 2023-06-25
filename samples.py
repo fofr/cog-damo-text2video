@@ -38,7 +38,17 @@ def main():
         guidance_scale=17.5,
         fps=12,
     )
-    
+    gen(
+        "vid-sample.mp4",
+        prompt="A deep sea video of a bioluminescent siphonophore, 8k, beautiful, award winning, close up",
+        seed=42,
+        num_frames=24,
+        num_inference_steps=30,
+        guidance_scale=17.5,
+        init_video="https://replicate.delivery/pbxt/qxacIWhXu0rFAZu6GMElrXrTL5Wx6ZqnjPqIoS7DgIftowkIA/out.mp4",
+        fps=12,
+    )
+
 
 
 if __name__ == "__main__":
