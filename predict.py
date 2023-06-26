@@ -46,7 +46,7 @@ class Predictor(BasePredictor):
             description="Width of the output video", ge=256, default=576
         ),
         height: int = Input(
-            description="Height of the output video", ge=256, default=32
+            description="Height of the output video", ge=256, default=320
         ),
         guidance_scale: float = Input(
             description="Guidance scale", ge=1.0, le=100.0, default=7.5
