@@ -179,7 +179,6 @@ def run(**args):
     seed = args.get("seed")
     fps = args.pop("fps")
     remove_watermark = args.pop("remove_watermark")
-    init_video = args.pop("init_video")
 
     init_video = args.get("init_video", None)
     if init_video is not None:
