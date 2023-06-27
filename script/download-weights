@@ -29,4 +29,12 @@ pipe = DiffusionPipeline.from_pretrained(
 
 pipe.save_pretrained(MODEL_CACHE + "/576w")
 
+pipe = DiffusionPipeline.from_pretrained(
+    "camenduru/potat1",
+    torch_dtype=torch.float16,
+    cache_dir=TMP_CACHE,
+)
+
+pipe.save_pretrained(MODEL_CACHE + "/potat1")
+
 shutil.rmtree(TMP_CACHE)
