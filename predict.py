@@ -59,7 +59,9 @@ class Predictor(BasePredictor):
             description="Guidance scale", ge=1.0, le=100.0, default=7.5
         ),
         fps: int = Input(description="fps for the output video", default=8),
-        fast: bool = Input(description="fast => 576w, normal = xl", default=True),
+        model: str = Input(
+            description="Model to use", default="xl", choices=["xl", "576w", "potat1"]
+        ),
         batch_size: int = Input(description="Batch size", default=1, ge=1),
         remove_watermark: bool = Input(
             description="Remove watermark", default=False
@@ -91,10 +93,7 @@ class Predictor(BasePredictor):
             "remove_watermark": remove_watermark,
         }
 
-        if fast:
-            args['model'] = MODEL_CACHE + "/576w"
-        else:
-            args['model'] = MODEL_CACHE + "/xl"
+        args['model'] = MODEL_CACHE + "/" + model
 
         if init_video is not None:
             # for some reason I need to copy the file to make it work
