@@ -174,9 +174,9 @@ def export_to_video(video_frames, output_video_path, fps):
 
 
 def run(**args):
+    decord.bridge.set_bridge("torch")
+
     output_dir = args.pop("output_dir")
-    prompt = args.get("prompt")
-    seed = args.get("seed")
     fps = args.pop("fps")
     remove_watermark = args.pop("remove_watermark")
 
@@ -190,10 +190,6 @@ def run(**args):
     videos = inference(**args)
 
     os.makedirs(output_dir, exist_ok=True)
-    out_stem = f"{output_dir}/"
-    if init_video is not None:
-        out_stem += f"({Path(init_video).stem}) * {args['init_weight']} | "
-    prompt = prompt[:25]
 
     for idx, video in enumerate(videos):
         if remove_watermark:
@@ -211,8 +207,6 @@ def run(**args):
 
 
 if __name__ == "__main__":
-    decord.bridge.set_bridge("torch")
-
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--model", type=str, required=True)
     parser.add_argument("-p", "--prompt", type=str, required=True)
