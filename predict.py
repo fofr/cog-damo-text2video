@@ -1,33 +1,14 @@
 import os
 from typing import List
 from cog import BasePredictor, Input, Path
-import inference
+import subprocess
 import shutil
 
 MODEL_CACHE = "model-cache"
 
 class Predictor(BasePredictor):
     def setup(self):
-        """Load the model into memory to make running multiple predictions efficient"""
         pass
-        # self.pipe_xl = DiffusionPipeline.from_pretrained(
-        #     MODEL_CACHE + "/xl",
-        #     torch_dtype=torch.float16,
-        #     local_files_only=True,
-        # ).to("cuda")
-
-        # self.pipe_576w = DiffusionPipeline.from_pretrained(
-        #     MODEL_CACHE + "/576w",
-        #     torch_dtype=torch.float16,
-        #     local_files_only=True,
-        # ).to("cuda")
-
-        # for p in [self.pipe_576w, self.pipe_xl]:
-        #     p.scheduler = DPMSolverMultistepScheduler.from_config(
-        #         p.scheduler.config
-        #     )
-        #     p.enable_model_cpu_offload()
-        #     p.enable_vae_slicing()
 
     def predict(
         self,
@@ -84,13 +65,13 @@ class Predictor(BasePredictor):
             "num_frames": num_frames,
             "num_steps": num_inference_steps,
             "seed": seed,
-            "guidance_scale": guidance_scale,
+            "guidance-scale": guidance_scale,
             "width": width,
             "height": height,
             "fps": fps,
             "device": "cuda",
             "output_dir": "output",
-            "remove_watermark": remove_watermark,
+            "remove-watermark": remove_watermark,
         }
 
         args['model'] = MODEL_CACHE + "/" + model
@@ -101,11 +82,20 @@ class Predictor(BasePredictor):
                 os.unlink("input.mp4")
             shutil.copy(init_video, "input.mp4")
 
-            args["init_video"] = "input.mp4"
-            args["init_weight"] = init_weight
-            print("init_video", os.stat("input.mp4").st_size)
-        else:
-            args['init_video'] = None
+            args["init-video"] = "input.mp4"
+            args["init-weight"] = init_weight
+            print("init video", os.stat("input.mp4").st_size)
 
-        outputs = inference.run(**args)
-        return [Path(out) for out in outputs]
+        cmd = ["python", "inference.py"]
+        for k, v in args.items():
+            if not v is None:
+                cmd.append(f"--{k}")
+                cmd.append(str(v))
+        subprocess.check_call(cmd)
+        # outputs = inference.run(**args)
+
+        outputs = []
+        for f in os.listdir("output"):
+            if f.endswith(".mp4"):
+                outputs.append(Path(os.path.join("output", f)))
+        return outputs
