@@ -7,7 +7,7 @@ build:
     - "git+https://github.com/huggingface/diffusers@main"
     - "gradio==3.35.2"
     - "imageio[ffmpeg]==2.31.1"
-    - "torch==2.0.1"
+    - "torch==2.0.1+cu118"
     - "torchvision==0.15.2"
     - "transformers==4.30.2"
     - "einops==0.6.1"
