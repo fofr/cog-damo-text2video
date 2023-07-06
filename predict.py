@@ -44,9 +44,6 @@ class Predictor(BasePredictor):
             description="Model to use", default="xl", choices=["xl", "576w", "potat1"]
         ),
         batch_size: int = Input(description="Batch size", default=1, ge=1),
-        remove_watermark: bool = Input(
-            description="Remove watermark", default=False
-        ),
         seed: int = Input(
             description="Random seed. Leave blank to randomize the seed", default=None
         ),
@@ -71,7 +68,6 @@ class Predictor(BasePredictor):
             "fps": fps,
             "device": "cuda",
             "output_dir": "output",
-            "remove-watermark": remove_watermark,
         }
 
         args['model'] = MODEL_CACHE + "/" + model
